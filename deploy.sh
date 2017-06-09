@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Create Guestbook"
+echo "Create iot4e-deployment"
 IP_ADDR=$(bx cs workers $CLUSTER_NAME | grep normal | awk '{ print $2 }')
 if [ -z $IP_ADDR ]; then
   echo "$CLUSTER_NAME not created or workers not ready"
@@ -15,21 +15,19 @@ if [ $? -ne 0 ]; then
 fi
 eval "$exp"
 
-echo -e "Downloading guestbook yml"
-curl --silent "https://raw.githubusercontent.com/kubernetes/kubernetes/master/examples/guestbook/all-in-one/guestbook-all-in-one.yaml" > guestbook.yml
+echo -e "Check if deployment exists for app " $CF_APP
+kubectl get deployments | grep $CF_APP
+if [ $? -ne 0 ]; then
+  echo -e "App not deployed to cluster yet, creating pods"
+  kubectl create -f $1
+else
+  echo -e "App already deployed to cluster, updating it..."
+  LATEST_APP_VERSION=$(bx cr images | grep $CF_APP | sort -rnk3 | awk '!x[$1]++' | awk '{print $3}')
+  # set the new version to the deployment, this would perform a red/black update
+  kubectl set image deployment $CF_APP $CF_APP=registry.ng.bluemix.net/iot4i_v2/$CF_APP:$LATEST_APP_VERSION
+fi
 
-#Find the line that has the comment about the load balancer and add the nodeport def after this
-let NU=$(awk '/^  # type: LoadBalancer/{ print NR; exit }' guestbook.yml)+3
-NU=$NU\i
-sed -i "$NU\ \ type: NodePort" guestbook.yml #For OSX: brew install gnu-sed; replace sed references with gsed
-
-echo -e "Deleting previous version of guestbook if it exists"
-kubectl delete --ignore-not-found=true   -f guestbook.yml
-
-echo -e "Creating pods"
-kubectl create -f guestbook.yml
-
-PORT=$(kubectl get services | grep frontend | sed 's/.*:\([0-9]*\).*/\1/g')
+PORT=$(kubectl get services | grep $SERVICE_NAME | sed 's/.*://g' | sed 's/\/.*//g')
 
 echo ""
-echo "View the guestbook at http://$IP_ADDR:$PORT"
+echo "View the iot4e-deployment at http://$IP_ADDR:$PORT"
