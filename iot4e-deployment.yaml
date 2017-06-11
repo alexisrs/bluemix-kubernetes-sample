@@ -44,7 +44,7 @@ spec:
         tier: ConnectedProducts
     spec:
       containers:
-      - name: ConnectedProducts
+      - name: connectedproducts
         image: registry.eu-gb.bluemix.net/connected_products/iotconnectedproducts
         ports:
         - containerPort: 4012
