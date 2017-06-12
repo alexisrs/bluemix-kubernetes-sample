@@ -45,6 +45,6 @@ spec:
     spec:
       containers:
       - name: connectedproducts
-        image: registry.eu-gb.bluemix.net/alexisrs@br.ibm.com_dev/connectedproducts
+        image: registry.eu-gb.bluemix.net/alexisrs/connectedproducts
         ports:
         - containerPort: 4012
