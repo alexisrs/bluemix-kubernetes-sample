@@ -44,7 +44,7 @@ spec:
         tier: connectedproducts
     spec:
       containers:
-      - name: iotconnectedproducts
-        image: registry.eu-gb.bluemix.net/alexisrs/iotconnectedproducts
+      - name: connectedproducts
+        image: registry.eu-gb.bluemix.net/alexisrs/connectedproducts
         ports:
         - containerPort: 4012
