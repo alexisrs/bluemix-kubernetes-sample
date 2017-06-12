@@ -24,7 +24,7 @@ else
   echo -e "App already deployed to cluster, updating it..."
   LATEST_APP_VERSION=$(bx cr images | grep $CF_APP | sort -rnk3 | awk '!x[$1]++' | awk '{print $3}')
   # set the new version to the deployment, this would perform a red/black update
-  kubectl set image deployment $CF_APP $CF_APP=registry.ng.bluemix.net/iot4i_v2/$CF_APP:$LATEST_APP_VERSION
+  kubectl set image deployment $CF_APP $CF_APP=registry.ng.bluemix.net/electronics_dev/$CF_APP:$LATEST_APP_VERSION
 fi
 
 PORT=$(kubectl get services | grep $SERVICE_NAME | sed 's/.*://g' | sed 's/\/.*//g')
