@@ -45,6 +45,6 @@ spec:
     spec:
       containers:
       - name: connectedproducts
-        image: registry.eu-gb.bluemix.net/electronics_dev/iotconnectedproducts
+        image: registry.eu-gb.bluemix.net/electronics_dev/connectedproducts
         ports:
         - containerPort: 4012
