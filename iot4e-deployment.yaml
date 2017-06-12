@@ -3,8 +3,8 @@ kind: Service
 metadata:
   name: connectedproducts-service
   labels:
-    app: ConnectedProducts
-    tier: ConnectedProducts
+    app: connectedproducts
+    tier: connectedproducts
 spec:
   # if your cluster supports it, uncomment the following to automatically create
   # an external load-balanced IP for the frontend service.
@@ -15,8 +15,8 @@ spec:
   - port: 4012
     nodePort: 31003
   selector:
-    app: ConnectedProducts
-    tier: ConnectedProducts
+    app: connectedproducts
+    tier: connectedproducts
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -40,8 +40,8 @@ spec:
   template:
     metadata:
       labels:
-        app: ConnectedProducts
-        tier: ConnectedProducts
+        app: connectedproducts
+        tier: connectedproducts
     spec:
       containers:
       - name: connectedproducts
